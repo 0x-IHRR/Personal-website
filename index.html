@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="小白 / XiaoBai 的个人主页：ETHPanda DevRel、独立开发者、全干工程师、AI x Web3 化学反应师。">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>小白 / XiaoBai</title>
+  <style>
+    :root {
+      --paper: #f4f1ea;
+      --paper-soft: #ebe7dc;
+      --ink: #161716;
+      --ink-muted: #5d625d;
+      --line: rgba(22, 23, 22, 0.14);
+      --line-strong: rgba(22, 23, 22, 0.28);
+      --mineral: #4d685f;
+      --blue-grey: #697989;
+      --clay: #a16c55;
+      --moss: #748065;
+      --white: #fffdf7;
+      --shadow: 0 22px 70px rgba(28, 31, 28, 0.09);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body[data-theme="dark"] {
+      --paper: #05060b;
+      --paper-soft: #0d1020;
+      --ink: #f4f7ff;
+      --ink-muted: #aab4d6;
+      --line: rgba(111, 153, 255, 0.18);
+      --line-strong: rgba(179, 100, 255, 0.42);
+      --mineral: #29c7ff;
+      --blue-grey: #8a74ff;
+      --clay: #b969ff;
+      --moss: #47f0ff;
+      --white: #101424;
+      --shadow: 0 24px 90px rgba(83, 32, 255, 0.26);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(22, 23, 22, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(0deg, rgba(22, 23, 22, 0.026) 1px, transparent 1px) 0 0 / 42px 42px,
+        radial-gradient(circle at 15% 14%, rgba(116, 128, 101, 0.14), transparent 27rem),
+        radial-gradient(circle at 88% 8%, rgba(105, 121, 137, 0.13), transparent 28rem),
+        var(--paper);
+      font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+      transition: background 280ms var(--ease), color 280ms var(--ease);
+    }
+
+    body[data-theme="dark"] {
+      background:
+        linear-gradient(90deg, rgba(88, 117, 255, 0.08) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(0deg, rgba(178, 72, 255, 0.06) 1px, transparent 1px) 0 0 / 42px 42px,
+        radial-gradient(circle at 18% 8%, rgba(75, 21, 255, 0.34), transparent 30rem),
+        radial-gradient(circle at 86% 12%, rgba(0, 194, 255, 0.22), transparent 28rem),
+        radial-gradient(circle at 50% 60%, rgba(178, 72, 255, 0.16), transparent 36rem),
+        var(--paper);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    .site-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Iowan Old Style", "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      font-size: 18px;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--ink);
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--ink);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    body[data-theme="dark"] .brand-mark {
+      color: #eaf7ff;
+      background: linear-gradient(135deg, #11162d, #2c146a);
+      border-color: rgba(41, 199, 255, 0.48);
+      box-shadow: 0 0 18px rgba(41, 199, 255, 0.34);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a,
+    .social-link,
+    .work-link,
+    .send-button,
+    .prompt-chip {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      transition: transform 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease), color 220ms var(--ease);
+    }
+
+    .nav-links a {
+      padding: 8px 13px;
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--ink);
+      background: rgba(255, 253, 247, 0.62);
+      outline: none;
+    }
+
+    body[data-theme="dark"] .topbar {
+      background: rgba(5, 6, 11, 0.78);
+      border-bottom-color: rgba(111, 153, 255, 0.18);
+      box-shadow: 0 0 40px rgba(72, 79, 255, 0.08);
+    }
+
+    body[data-theme="dark"] .nav-links a:hover,
+    body[data-theme="dark"] .nav-links a:focus-visible {
+      background: rgba(73, 86, 179, 0.18);
+    }
+
+    .theme-toggle {
+      min-height: 36px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 6px 11px;
+      color: var(--ink);
+      background: rgba(255, 253, 247, 0.44);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 220ms var(--ease), background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+
+    .theme-toggle::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--ink);
+      box-shadow: 0 0 0 4px rgba(22, 23, 22, 0.08);
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--ink);
+      outline: none;
+    }
+
+    body[data-theme="dark"] .theme-toggle {
+      background: rgba(30, 37, 77, 0.64);
+      box-shadow: inset 0 0 22px rgba(41, 199, 255, 0.08);
+    }
+
+    body[data-theme="dark"] .theme-toggle::before {
+      background: var(--mineral);
+      box-shadow: 0 0 16px rgba(41, 199, 255, 0.86);
+    }
+
+    .hero {
+      position: relative;
+      min-height: min(760px, calc(100vh - 72px));
+      display: grid;
+      align-items: center;
+      padding: 44px 0 32px;
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 40px auto auto 0;
+      width: min(52vw, 680px);
+      height: 250px;
+      background: url("assets/ip-light-banner-hero.png") left center / cover no-repeat;
+      border: 1px solid rgba(105, 121, 137, 0.12);
+      opacity: 0.34;
+      pointer-events: none;
+      z-index: -1;
+      mask-image: linear-gradient(90deg, transparent, black 24%, black 76%, transparent);
+      transition: opacity 260ms var(--ease);
+    }
+
+    body[data-theme="dark"] .hero::after {
+      inset: 42px 0 auto auto;
+      background-image: url("assets/ip-dark-banner-omega.png");
+      background-position: center;
+      border-color: rgba(111, 153, 255, 0.16);
+      opacity: 0.22;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+      gap: clamp(36px, 7vw, 108px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 11px;
+      color: var(--mineral);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 44px;
+      height: 1px;
+      background: var(--mineral);
+    }
+
+    h1,
+    h2,
+    h3,
+    .section-kicker {
+      font-family: "Iowan Old Style", "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-wrap: pretty;
+    }
+
+    h1 {
+      max-width: 860px;
+      margin: 24px 0 22px;
+      font-size: clamp(64px, 11vw, 158px);
+      line-height: 0.9;
+    }
+
+    .hero-copy {
+      max-width: 740px;
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: clamp(18px, 2.1vw, 24px);
+      line-height: 1.58;
+      text-wrap: pretty;
+    }
+
+    .hero-copy strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .identity-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 32px 0 0;
+    }
+
+    .identity-line span,
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.45);
+      color: color-mix(in srgb, var(--ink) 84%, var(--mineral));
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .social-link {
+      gap: 10px;
+      padding: 10px 17px;
+      border: 1px solid var(--line-strong);
+      color: var(--ink);
+      background: rgba(255, 253, 247, 0.55);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .social-link:hover,
+    .social-link:focus-visible,
+    .work-link:hover,
+    .work-link:focus-visible,
+    .send-button:hover,
+    .send-button:focus-visible,
+    .prompt-chip:hover,
+    .prompt-chip:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--ink);
+      outline: none;
+    }
+
+    .social-link[data-tone="dark"] {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .arrow {
+      display: inline-block;
+      transform: translateY(-1px);
+    }
+
+    .portrait-wrap {
+      justify-self: end;
+      width: min(calc(100% - 10px), 344px);
+      position: relative;
+    }
+
+    .portrait-frame {
+      position: relative;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 253, 247, 0.5);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .portrait-frame::before {
+      content: "";
+      position: absolute;
+      inset: 11px;
+      border: 1px solid rgba(77, 104, 95, 0.25);
+      pointer-events: none;
+    }
+
+    .portrait-frame img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: center 34%;
+      filter: saturate(0.78) contrast(1.02) brightness(0.94);
+    }
+
+    .portrait-caption {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
+      margin-top: 14px;
+      color: var(--ink-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .caption-name {
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      font-size: 18px;
+    }
+
+    .section {
+      padding: clamp(38px, 5.8vw, 66px) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(160px, 0.34fr) minmax(0, 1fr);
+      gap: clamp(24px, 5vw, 74px);
+      align-items: start;
+      margin-bottom: 26px;
+    }
+
+    .section-kicker {
+      margin: 0;
+      color: var(--clay);
+      font-size: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 2.9vw, 42px);
+      line-height: 1.12;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 14px 0 0;
+      color: var(--ink-muted);
+      font-size: clamp(16px, 1.35vw, 18px);
+      text-wrap: pretty;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .note-panel,
+    .work-card,
+    .agent-panel,
+    .contact-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 247, 0.54);
+      box-shadow: 0 16px 52px rgba(28, 31, 28, 0.055);
+    }
+
+    .note-panel {
+      padding: clamp(20px, 2.4vw, 28px);
+      min-height: 218px;
+    }
+
+    .note-panel h3,
+    .work-card h3 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.14;
+    }
+
+    .note-panel p,
+    .work-card p {
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: 16px;
+      text-wrap: pretty;
+    }
+
+    .note-rule {
+      width: 100%;
+      height: 1px;
+      margin: 18px 0;
+      background: var(--line);
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .work-card {
+      min-height: 238px;
+      padding: 22px;
+      display: grid;
+      align-content: space-between;
+      transition: transform 240ms var(--ease), background 240ms var(--ease), border-color 240ms var(--ease);
+    }
+
+    .work-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--line-strong);
+      background: rgba(255, 253, 247, 0.76);
+    }
+
+    .work-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 28px;
+      color: var(--ink-muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .work-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--mineral);
+    }
+
+    .work-card:nth-child(2) .work-dot {
+      background: var(--blue-grey);
+    }
+
+    .work-card:nth-child(3) .work-dot {
+      background: var(--clay);
+    }
+
+    .work-card:nth-child(4) .work-dot {
+      background: var(--moss);
+    }
+
+    .work-link {
+      width: fit-content;
+      margin-top: 20px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(244, 241, 234, 0.62);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .agent-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(300px, 0.58fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .agent-panel {
+      padding: clamp(20px, 3vw, 30px);
+    }
+
+    .answer-box {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(244, 241, 234, 0.55);
+      color: var(--ink-muted);
+      font-size: 17px;
+      line-height: 1.72;
+      text-wrap: pretty;
+      transition: background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+
+    .answer-box.is-fresh {
+      border-color: color-mix(in srgb, var(--mineral) 62%, var(--line));
+      background: rgba(255, 253, 247, 0.72);
+    }
+
+    .answer-box strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .ask-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 14px;
+      align-items: end;
+    }
+
+    .ask-input {
+      width: 100%;
+      min-height: 52px;
+      max-height: 190px;
+      resize: none;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 13px 15px;
+      color: var(--ink);
+      background: rgba(255, 253, 247, 0.74);
+      line-height: 1.55;
+      outline: none;
+      transition: border-color 220ms var(--ease), background 220ms var(--ease), box-shadow 220ms var(--ease);
+    }
+
+    .ask-input:focus {
+      border-color: var(--mineral);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(77, 104, 95, 0.11);
+    }
+
+    .send-button {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0 18px;
+      height: 52px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .send-button:active,
+    .social-link:active,
+    .icon-link:active,
+    .work-link:active,
+    .prompt-chip:active {
+      transform: translateY(0);
+    }
+
+    .prompt-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .prompt-chip {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.38);
+      color: var(--ink-muted);
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .source-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .source-list a {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .source-list span {
+      color: var(--ink-muted);
+      text-align: right;
+    }
+
+    .contact-panel {
+      position: relative;
+      padding: clamp(24px, 4vw, 44px);
+      display: grid;
+      grid-template-columns: minmax(160px, 0.34fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .contact-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("assets/ip-light-banner-contact.png") left center / cover no-repeat;
+      opacity: 0.2;
+      pointer-events: none;
+      transition: opacity 260ms var(--ease);
+    }
+
+    .contact-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-panel p {
+      max-width: 740px;
+      margin: 12px 0 0;
+      color: var(--ink-muted);
+      font-size: 18px;
+      text-wrap: pretty;
+    }
+
+    .contact-copy {
+      text-align: left;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      grid-column: 1 / -1;
+      margin-top: 2px;
+    }
+
+    .icon-link {
+      width: 48px;
+      height: 48px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 253, 247, 0.58);
+      color: var(--ink);
+      transition: transform 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+
+    .icon-link:hover,
+    .icon-link:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      outline: none;
+    }
+
+    .icon-link svg {
+      width: 21px;
+      height: 21px;
+      display: block;
+    }
+
+    footer {
+      padding: 22px 0 40px;
+      color: var(--ink-muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    body[data-theme="dark"] .eyebrow,
+    body[data-theme="dark"] .section-kicker {
+      color: var(--mineral);
+      text-shadow: 0 0 18px rgba(41, 199, 255, 0.46);
+    }
+
+    body[data-theme="dark"] .eyebrow::before {
+      background: linear-gradient(90deg, var(--mineral), var(--clay));
+      box-shadow: 0 0 14px rgba(41, 199, 255, 0.7);
+    }
+
+    body[data-theme="dark"] .identity-line span,
+    body[data-theme="dark"] .tag,
+    body[data-theme="dark"] .note-panel,
+    body[data-theme="dark"] .work-card,
+    body[data-theme="dark"] .agent-panel,
+    body[data-theme="dark"] .contact-panel {
+      background: linear-gradient(180deg, rgba(16, 20, 40, 0.82), rgba(7, 9, 19, 0.74));
+      border-color: var(--line);
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.35), inset 0 0 38px rgba(41, 199, 255, 0.035);
+    }
+
+    body[data-theme="dark"] .portrait-frame {
+      background: #05060b;
+      border-color: rgba(41, 199, 255, 0.34);
+      box-shadow: 0 0 48px rgba(100, 49, 255, 0.38);
+    }
+
+    body[data-theme="dark"] .portrait-frame::before {
+      border-color: rgba(179, 100, 255, 0.32);
+    }
+
+    body[data-theme="dark"] .portrait-frame img {
+      filter: saturate(1.05) contrast(1.08) brightness(0.9);
+      object-position: center 28%;
+    }
+
+    body[data-theme="dark"] .social-link,
+    body[data-theme="dark"] .work-link,
+    body[data-theme="dark"] .prompt-chip,
+    body[data-theme="dark"] .icon-link {
+      background: rgba(16, 20, 40, 0.72);
+      border-color: var(--line-strong);
+    }
+
+    body[data-theme="dark"] .social-link[data-tone="dark"],
+    body[data-theme="dark"] .send-button {
+      color: #041018;
+      background: linear-gradient(135deg, #46ddff, #b969ff);
+      border-color: rgba(41, 199, 255, 0.72);
+      box-shadow: 0 0 26px rgba(41, 199, 255, 0.24);
+    }
+
+    body[data-theme="dark"] .work-card:hover,
+    body[data-theme="dark"] .icon-link:hover,
+    body[data-theme="dark"] .icon-link:focus-visible {
+      border-color: rgba(41, 199, 255, 0.66);
+      background: rgba(20, 25, 53, 0.9);
+      color: var(--ink);
+      box-shadow: 0 0 34px rgba(41, 199, 255, 0.18), inset 0 0 40px rgba(179, 100, 255, 0.055);
+    }
+
+    body[data-theme="dark"] .answer-box,
+    body[data-theme="dark"] .ask-input {
+      background: rgba(5, 8, 18, 0.76);
+      border-color: var(--line);
+    }
+
+    body[data-theme="dark"] .ask-input:focus {
+      border-color: var(--mineral);
+      background: rgba(7, 11, 26, 0.94);
+      box-shadow: 0 0 0 4px rgba(41, 199, 255, 0.14), 0 0 28px rgba(179, 100, 255, 0.16);
+    }
+
+    body[data-theme="dark"] .source-list a {
+      color: var(--ink);
+    }
+
+    body[data-theme="dark"] .contact-panel::before {
+      background-image: url("assets/ip-dark-banner-trade.png");
+      background-position: center;
+      opacity: 0.1;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: reveal 760ms var(--ease) forwards;
+    }
+
+    .reveal:nth-child(2) {
+      animation-delay: 90ms;
+    }
+
+    .reveal:nth-child(3) {
+      animation-delay: 180ms;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid,
+      .section-head,
+      .about-grid,
+      .agent-layout,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait-wrap {
+        justify-self: start;
+        width: min(calc(100% - 10px), 310px);
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        justify-content: center;
+      }
+
+      .contact-copy {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-shell {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .topbar {
+        position: static;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px 0;
+      }
+
+      .nav-actions {
+        justify-content: flex-start;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .nav-links a {
+        padding-left: 0;
+      }
+
+      h1 {
+        font-size: clamp(54px, 19vw, 86px);
+      }
+
+      h2 {
+        font-size: clamp(28px, 10vw, 38px);
+      }
+
+      .hero-actions,
+      .identity-line {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .social-link,
+      .identity-line span {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .ask-form {
+        grid-template-columns: 1fr;
+      }
+
+      .send-button {
+        width: 100%;
+      }
+
+      .source-list a {
+        display: grid;
+      }
+
+      .source-list span {
+        text-align: left;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        scroll-behavior: auto !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <header class="topbar">
+    <nav class="site-shell nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="小白 / XiaoBai">
+        <span class="brand-mark">XB</span>
+        <span>小白 / XiaoBai</span>
+      </a>
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#works">Works</a>
+          <a href="#ask">Ask</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+          <span id="themeLabel">Dark</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="site-shell hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow reveal">AI x Web3 / DevRel / Builder</div>
+          <h1 class="reveal">小白<br>XiaoBai</h1>
+          <p class="hero-copy reveal">
+            <strong>ETHPanda DevRel、独立开发者、全干工程师、AI 忠实信徒、AI x Web3 化学反应师。</strong>
+            A builder who likes turning new tools into useful public experiments, and turning meetings into new friendships.
+          </p>
+          <div class="identity-line reveal" aria-label="Identity tags">
+            <span>ETHPanda DevRel</span>
+            <span>Independent Developer</span>
+            <span>Full-stack Builder</span>
+            <span>AI x Web3</span>
+          </div>
+          <div class="hero-actions reveal">
+            <a class="social-link" data-tone="dark" href="mailto:wzx824030716@gmail.com">Email <span class="arrow">↗</span></a>
+            <a class="social-link" href="https://x.com/0x_XiaoBaiAI" target="_blank" rel="noreferrer">Twitter / X <span class="arrow">↗</span></a>
+            <a class="social-link" href="https://github.com/0x-IHRR" target="_blank" rel="noreferrer">GitHub <span class="arrow">↗</span></a>
+          </div>
+        </div>
+
+        <aside class="portrait-wrap reveal" aria-label="Public profile portrait">
+          <div class="portrait-frame">
+            <img id="avatarImage" src="assets/ip-light-character.png" data-light-src="assets/ip-light-character.png" data-dark-src="assets/ip-dark-character.png" alt="小白 / XiaoBai IP avatar">
+          </div>
+          <div class="portrait-caption">
+            <span><span class="caption-name">.小白</span><br>Selected IP avatar</span>
+            <span>0x-IHRR</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="site-shell">
+        <div class="section-head">
+          <p class="section-kicker">About</p>
+          <div>
+            <h2>连接技术、社区和真实问题。</h2>
+            <p class="lead">
+              小白的工作重心在 AI 与 Web3 的交叉处：一边做 DevRel，一边独立开发工具和原型，也持续学习、跑会、认识新朋友。这个主页只展示适合公开认识的信息，不放过度私人的内容。
+            </p>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <article class="note-panel">
+            <h3>中文</h3>
+            <p>
+              我关注的是“新技术怎么真正被人用起来”。AI 能放大个人创造力，Web3 能重塑协作和所有权，两者交汇处有很多还没被清楚表达的新机会。
+            </p>
+            <div class="note-rule"></div>
+            <p>
+              我的角色更像连接器：写代码、做产品原型、理解开发者、解释复杂概念，也把不同背景的人带到同一张桌子上。
+            </p>
+          </article>
+
+          <article class="note-panel">
+            <h3>English</h3>
+            <p>
+              I work around the overlap of AI, Web3, developer education, and community. The useful part is not just shipping code, but making new tools easier to understand and easier to try.
+            </p>
+            <div class="note-rule"></div>
+            <p>
+              I am interested in practical experiments, public learning, and conversations that turn into collaborations.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="works" class="section">
+      <div class="site-shell">
+        <div class="section-head">
+          <p class="section-kicker">Works</p>
+          <div>
+            <h2>公开作品只放确认入口。</h2>
+            <p class="lead">
+              这里先选择能从 GitHub 公开资料看到的方向。更完整的作品故事、客户项目和私有项目，后续可以补充为更正式的 case study。
+            </p>
+          </div>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card">
+            <div>
+              <div class="work-meta"><span>Web3 / Solidity</span><span class="work-dot"></span></div>
+              <h3>ADHD_BlockChain</h3>
+              <p>Web3 与 Solidity 方向的公开仓库。具体项目背景和展示图后续可补成正式 case study。</p>
+            </div>
+            <a class="work-link" href="https://github.com/0x-IHRR/ADHD_BlockChain" target="_blank" rel="noreferrer">View on GitHub</a>
+          </article>
+
+          <article class="work-card">
+            <div>
+              <div class="work-meta"><span>Tool / App</span><span class="work-dot"></span></div>
+              <h3>Man-hour-calculator</h3>
+              <p>公开仓库显示为 Swift 工具方向。具体场景、设计背景和使用方式等待补充说明。</p>
+            </div>
+            <a class="work-link" href="https://github.com/0x-IHRR/Man-hour-calculator" target="_blank" rel="noreferrer">View on GitHub</a>
+          </article>
+
+          <article class="work-card">
+            <div>
+              <div class="work-meta"><span>Web Project</span><span class="work-dot"></span></div>
+              <h3>FargeSpace_ThinkTank</h3>
+              <p>JavaScript 方向的公开 Web 项目。当前先作为作品入口展示，细节说明等待补充。</p>
+            </div>
+            <a class="work-link" href="https://github.com/0x-IHRR/FargeSpace_ThinkTank" target="_blank" rel="noreferrer">View on GitHub</a>
+          </article>
+
+          <article class="work-card">
+            <div>
+              <div class="work-meta"><span>Auction Demo</span><span class="work-dot"></span></div>
+              <h3>One-Pound-Auction</h3>
+              <p>TypeScript 方向的拍卖演示项目。后续可补充产品机制、页面截图和构建动机。</p>
+            </div>
+            <a class="work-link" href="https://github.com/0x-IHRR/One-Pound-Auction" target="_blank" rel="noreferrer">View on GitHub</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="interests" class="section">
+      <div class="site-shell">
+        <div class="section-head">
+          <p class="section-kicker">Interests</p>
+          <div>
+            <h2>技术之外，保持体力和连接。</h2>
+            <p class="lead">
+              跑步、健身、学习、AI、跑会交朋友、ENTJ。这些不是人设装饰，更像持续做事的底层燃料。
+            </p>
+            <div class="tags" aria-label="Interests">
+              <span class="tag">跑步 / Running</span>
+              <span class="tag">健身 / Fitness</span>
+              <span class="tag">学习 / Learning</span>
+              <span class="tag">AI</span>
+              <span class="tag">Conference Friends</span>
+              <span class="tag">ENTJ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ask" class="section">
+      <div class="site-shell">
+        <div class="section-head">
+          <p class="section-kicker">Ask XiaoBai</p>
+          <div>
+            <h2>想快速了解，可以直接问。</h2>
+            <p class="lead">
+              这个窗口只回答公开信息、合作方式、作品线索和联系方式。私人经历、未确认项目和敏感信息不会展示。
+            </p>
+          </div>
+        </div>
+
+        <div class="agent-layout">
+          <section class="agent-panel" aria-label="Ask XiaoBai">
+            <div id="answerBox" class="answer-box" aria-live="polite">
+              <strong>可以问：</strong>你主要做什么？适合怎样合作？有哪些作品？怎么联系你？
+            </div>
+            <form class="ask-form" id="askForm">
+              <textarea id="askInput" class="ask-input" rows="1" placeholder="问一个问题，例如：合作方式？" aria-label="Ask XiaoBai a question"></textarea>
+              <button class="send-button" type="submit">Ask</button>
+            </form>
+            <div class="prompt-row" aria-label="Suggested questions">
+              <button class="prompt-chip" type="button" data-question="你主要做什么？">你主要做什么？</button>
+              <button class="prompt-chip" type="button" data-question="适合怎样合作？">适合怎样合作？</button>
+              <button class="prompt-chip" type="button" data-question="有哪些作品？">有哪些作品？</button>
+              <button class="prompt-chip" type="button" data-question="怎么联系你？">怎么联系你？</button>
+            </div>
+          </section>
+
+          <aside class="agent-panel" aria-label="Public sources">
+            <h3>Public sources</h3>
+            <ul class="source-list">
+              <li><a href="https://github.com/0x-IHRR" target="_blank" rel="noreferrer">GitHub Profile <span>0x-IHRR</span></a></li>
+              <li><a href="https://github.com/0x-IHRR?tab=repositories" target="_blank" rel="noreferrer">GitHub Repositories <span>17 public repos</span></a></li>
+              <li><a href="https://x.com/0x_XiaoBaiAI" target="_blank" rel="noreferrer">Twitter / X <span>@0x_XiaoBaiAI</span></a></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="site-shell">
+        <div class="contact-panel">
+          <p class="section-kicker">Contact</p>
+          <div class="contact-copy">
+            <h2>有真实问题，可以开始聊。</h2>
+            <p>
+              适合联系我的方向：AI x Web3 原型、开发者关系、社区协作、产品想法验证、公开学习和活动交流。
+            </p>
+          </div>
+          <div class="contact-links">
+            <a class="icon-link" href="mailto:wzx824030716@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M3.75 5.25h16.5A1.75 1.75 0 0 1 22 7v10a1.75 1.75 0 0 1-1.75 1.75H3.75A1.75 1.75 0 0 1 2 17V7a1.75 1.75 0 0 1 1.75-1.75Zm.08 2.25 8.17 5.33 8.17-5.33H3.83Zm16.42 9.75V9.05l-7.84 5.12a.75.75 0 0 1-.82 0L3.75 9.05v8.2h16.5Z"/>
+              </svg>
+            </a>
+            <a class="icon-link" href="https://github.com/0x-IHRR" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 .75A11.25 11.25 0 0 0 8.44 22.67c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.34-3.79-1.34-.51-1.31-1.25-1.66-1.25-1.66-1.03-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.65 1.23 3.3.94.1-.73.39-1.23.71-1.51-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.68 10.68 0 0 1 12 6.14c.96 0 1.9.13 2.8.38 2.14-1.45 3.09-1.15 3.09-1.15.62 1.55.23 2.7.12 2.98.72.79 1.15 1.79 1.15 3.02 0 4.32-2.63 5.27-5.14 5.55.4.35.76 1.04.76 2.1v3.11c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/>
+              </svg>
+            </a>
+            <a class="icon-link" href="https://x.com/0x_XiaoBaiAI" target="_blank" rel="noreferrer" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M14.3 10.16 22.5 1h-1.94l-7.12 7.95L7.75 1H1.2l8.6 12.02L1.2 22.64h1.94l7.52-8.4 6.01 8.4h6.55l-8.92-12.48Zm-2.66 2.97-.87-1.2L3.84 2.4h2.98l5.6 7.71.87 1.2 7.28 10.02h-2.98l-5.95-8.2Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-shell">
+    <span>小白 / XiaoBai · Public personal card · Built for quiet discovery.</span>
+  </footer>
+
+  <script>
+    const askForm = document.querySelector("#askForm");
+    const askInput = document.querySelector("#askInput");
+    const answerBox = document.querySelector("#answerBox");
+    const promptButtons = document.querySelectorAll("[data-question]");
+    const themeToggle = document.querySelector("#themeToggle");
+    const themeLabel = document.querySelector("#themeLabel");
+    const avatarImage = document.querySelector("#avatarImage");
+
+    function saveTheme(theme) {
+      try {
+        localStorage.setItem("xiaobai-theme", theme);
+      } catch (error) {
+        return;
+      }
+    }
+
+    function loadTheme() {
+      try {
+        return localStorage.getItem("xiaobai-theme");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function applyTheme(theme) {
+      const nextTheme = theme === "dark" ? "dark" : "light";
+      document.body.dataset.theme = nextTheme;
+      themeLabel.textContent = nextTheme === "dark" ? "Light" : "Dark";
+      themeToggle.setAttribute("aria-label", nextTheme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+      avatarImage.src = nextTheme === "dark" ? avatarImage.dataset.darkSrc : avatarImage.dataset.lightSrc;
+      saveTheme(nextTheme);
+    }
+
+    applyTheme(loadTheme() || "light");
+
+    themeToggle.addEventListener("click", () => {
+      applyTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    const answers = [
+      {
+        keys: ["做什么", "介绍", "who", "about", "身份", "devrel"],
+        text: "<strong>小白 / XiaoBai</strong> 是 ETHPanda DevRel、独立开发者、全干工程师，也长期关注 AI 与 Web3 的交叉机会。他适合出现在“技术、社区、产品原型、开发者理解”需要同时发生的地方。"
+      },
+      {
+        keys: ["合作", "客户", "项目", "collab", "work together", "合作方式"],
+        text: "适合的合作方向包括：AI x Web3 原型验证、开发者关系、社区活动、产品想法打磨、工具型项目搭建、公开学习资料整理。具体项目可以先通过 Email 或 Twitter / X 聊清楚边界。"
+      },
+      {
+        keys: ["作品", "项目", "github", "repo", "works", "portfolio"],
+        text: "公开作品线索主要在 GitHub：ADHD_BlockChain、Man-hour-calculator、FargeSpace_ThinkTank、One-Pound-Auction。主页只展示公开入口，未确认细节不会写成正式履历。"
+      },
+      {
+        keys: ["联系", "邮箱", "email", "twitter", "x", "github", "contact"],
+        text: "可以通过 <strong>Email</strong>：wzx824030716@gmail.com，<strong>Twitter / X</strong>：@0x_XiaoBaiAI，或 <strong>GitHub</strong>：@0x-IHRR 联系。"
+      },
+      {
+        keys: ["兴趣", "爱好", "跑步", "健身", "mbti", "entj"],
+        text: "公开兴趣包括跑步、健身、学习、AI、跑会交朋友。MBTI 是 ENTJ。这些信息只作为认识一个人的轻量线索，不展开私人内容。"
+      }
+    ];
+
+    function resizeInput() {
+      askInput.style.height = "auto";
+      askInput.style.height = Math.min(askInput.scrollHeight, 190) + "px";
+    }
+
+    function findAnswer(question) {
+      const normalized = question.trim().toLowerCase();
+
+      if (!normalized) {
+        return "可以问一个具体问题，例如：你主要做什么、适合怎样合作、有哪些作品、怎么联系。";
+      }
+
+      const matched = answers.find((item) => item.keys.some((key) => normalized.includes(key.toLowerCase())));
+      if (matched) return matched.text;
+
+      return "这个问题现在还没有公开答案。为了避免编造信息，这里只回答已公开或已授权展示的内容。你可以通过 Email 或 Twitter / X 直接问小白本人。";
+    }
+
+    function answer(question) {
+      answerBox.classList.remove("is-fresh");
+      answerBox.innerHTML = findAnswer(question);
+      window.setTimeout(() => answerBox.classList.add("is-fresh"), 20);
+    }
+
+    askInput.addEventListener("input", resizeInput);
+
+    askForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      answer(askInput.value);
+      askInput.value = "";
+      resizeInput();
+    });
+
+    promptButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const question = button.dataset.question;
+        askInput.value = question;
+        resizeInput();
+        answer(question);
+        askInput.focus();
+      });
+    });
+  </script>
+</body>
+</html>

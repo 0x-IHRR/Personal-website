@@ -1,0 +1,4 @@
+.playwright-mcp/
+.spec-workflow/
+xiaobai-*.png
+.DS_Store
