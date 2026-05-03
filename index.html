@@ -621,6 +621,146 @@
       background: var(--moss);
     }
 
+    .work-book {
+      position: relative;
+      perspective: 1800px;
+    }
+
+    .book-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 360px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(22, 23, 22, 0.08), transparent 8%, transparent 92%, rgba(22, 23, 22, 0.06)),
+        rgba(255, 253, 247, 0.72);
+      box-shadow: 0 28px 90px rgba(28, 31, 28, 0.12);
+      transform-style: preserve-3d;
+    }
+
+    .book-shell::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      z-index: 2;
+      background: linear-gradient(180deg, transparent, var(--line-strong), transparent);
+      box-shadow: -14px 0 30px rgba(22, 23, 22, 0.1), 14px 0 30px rgba(22, 23, 22, 0.06);
+    }
+
+    .book-page {
+      position: relative;
+      min-height: 360px;
+      padding: clamp(22px, 3vw, 34px);
+      display: grid;
+      align-content: space-between;
+      gap: 24px;
+      background:
+        linear-gradient(90deg, rgba(255, 253, 247, 0.46), transparent),
+        linear-gradient(0deg, rgba(22, 23, 22, 0.025) 1px, transparent 1px) 0 0 / 100% 34px;
+    }
+
+    .book-page[data-side="left"] {
+      box-shadow: inset -18px 0 40px rgba(22, 23, 22, 0.055);
+    }
+
+    .book-page[data-side="right"] {
+      box-shadow: inset 18px 0 40px rgba(22, 23, 22, 0.045);
+    }
+
+    .book-page h3 {
+      margin: 0 0 14px;
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.08;
+    }
+
+    .book-page p {
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: clamp(15px, 1.3vw, 17px);
+      text-wrap: pretty;
+    }
+
+    .book-page-number {
+      color: var(--ink-muted);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .book-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .book-dot {
+      width: 28px;
+      height: 3px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--line-strong);
+      cursor: pointer;
+      transition: background 220ms var(--ease), transform 220ms var(--ease);
+    }
+
+    .book-dot.is-active {
+      background: linear-gradient(90deg, var(--mineral), var(--violet));
+      transform: translateY(-1px);
+    }
+
+    .turning-sheet {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 50%;
+      z-index: 5;
+      pointer-events: none;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      animation: pageTurn 1050ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .turning-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      overflow: hidden;
+      padding: clamp(22px, 3vw, 34px);
+      display: grid;
+      align-content: space-between;
+      border-left: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.96);
+      box-shadow: inset 18px 0 44px rgba(22, 23, 22, 0.09);
+    }
+
+    .turning-face.back {
+      transform: rotateY(180deg);
+      box-shadow: inset -18px 0 44px rgba(22, 23, 22, 0.1);
+    }
+
+    @keyframes pageTurn {
+      0% {
+        transform: rotateY(0deg);
+        filter: brightness(1);
+      }
+      52% {
+        filter: brightness(0.86);
+      }
+      100% {
+        transform: rotateY(-180deg);
+        filter: brightness(1);
+      }
+    }
+
     .work-link {
       width: fit-content;
       margin-top: 20px;
@@ -938,6 +1078,22 @@
       box-shadow: 0 0 34px rgba(41, 199, 255, 0.18), inset 0 0 40px rgba(179, 100, 255, 0.055);
     }
 
+    body[data-theme="dark"] .book-shell {
+      background:
+        linear-gradient(90deg, rgba(41, 199, 255, 0.1), transparent 10%, transparent 90%, rgba(179, 100, 255, 0.1)),
+        linear-gradient(180deg, rgba(16, 20, 40, 0.92), rgba(7, 9, 19, 0.82));
+      border-color: var(--line);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36), 0 0 46px rgba(41, 199, 255, 0.12);
+    }
+
+    body[data-theme="dark"] .book-page,
+    body[data-theme="dark"] .turning-face {
+      background:
+        linear-gradient(90deg, rgba(41, 199, 255, 0.05), transparent),
+        linear-gradient(0deg, rgba(111, 153, 255, 0.04) 1px, transparent 1px) 0 0 / 100% 34px,
+        rgba(8, 12, 27, 0.96);
+    }
+
     body[data-theme="dark"] .answer-box,
     body[data-theme="dark"] .ask-input {
       background: rgba(5, 8, 18, 0.76);
@@ -1189,42 +1345,12 @@
           </div>
         </div>
 
-        <div class="work-grid">
-          <article class="work-card">
-            <div>
-              <div class="work-meta"><span>Web3 / Solidity</span><span class="work-dot"></span></div>
-              <h3>ADHD_BlockChain</h3>
-              <p>Web3 与 Solidity 方向的公开仓库。具体项目背景和展示图后续可补成正式 case study。</p>
-            </div>
-            <a class="work-link" href="https://github.com/0x-IHRR/ADHD_BlockChain" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="work-card">
-            <div>
-              <div class="work-meta"><span>Tool / App</span><span class="work-dot"></span></div>
-              <h3>Man-hour-calculator</h3>
-              <p>公开仓库显示为 Swift 工具方向。具体场景、设计背景和使用方式等待补充说明。</p>
-            </div>
-            <a class="work-link" href="https://github.com/0x-IHRR/Man-hour-calculator" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="work-card">
-            <div>
-              <div class="work-meta"><span>Web Project</span><span class="work-dot"></span></div>
-              <h3>FargeSpace_ThinkTank</h3>
-              <p>JavaScript 方向的公开 Web 项目。当前先作为作品入口展示，细节说明等待补充。</p>
-            </div>
-            <a class="work-link" href="https://github.com/0x-IHRR/FargeSpace_ThinkTank" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="work-card">
-            <div>
-              <div class="work-meta"><span>Auction Demo</span><span class="work-dot"></span></div>
-              <h3>One-Pound-Auction</h3>
-              <p>TypeScript 方向的拍卖演示项目。后续可补充产品机制、页面截图和构建动机。</p>
-            </div>
-            <a class="work-link" href="https://github.com/0x-IHRR/One-Pound-Auction" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
+        <div class="work-book" id="workBook" aria-live="polite">
+          <div class="book-shell" aria-label="Project book">
+            <article class="book-page" data-side="left" id="bookLeft"></article>
+            <article class="book-page" data-side="right" id="bookRight"></article>
+          </div>
+          <div class="book-progress" id="bookProgress" aria-label="Project pages"></div>
         </div>
       </div>
     </section>
@@ -1335,6 +1461,14 @@
     const themeToggle = document.querySelector("#themeToggle");
     const themeLabel = document.querySelector("#themeLabel");
     const avatarImage = document.querySelector("#avatarImage");
+    const workBook = document.querySelector("#workBook");
+    const bookShell = workBook?.querySelector(".book-shell");
+    const bookLeft = document.querySelector("#bookLeft");
+    const bookRight = document.querySelector("#bookRight");
+    const bookProgress = document.querySelector("#bookProgress");
+    let workSpreadIndex = 0;
+    let bookTimer = null;
+    let isBookTurning = false;
 
     function saveTheme(theme) {
       try {
@@ -1390,6 +1524,120 @@
       }
     ];
 
+    const workProjects = [
+      {
+        meta: "Web3 / Solidity",
+        title: "ADHD_BlockChain",
+        description: "Web3 与 Solidity 方向的公开仓库。具体项目背景和展示图后续可补成正式 case study。",
+        href: "https://github.com/0x-IHRR/ADHD_BlockChain"
+      },
+      {
+        meta: "Tool / App",
+        title: "Man-hour-calculator",
+        description: "公开仓库显示为 Swift 工具方向。具体场景、设计背景和使用方式等待补充说明。",
+        href: "https://github.com/0x-IHRR/Man-hour-calculator"
+      },
+      {
+        meta: "Web Project",
+        title: "FargeSpace_ThinkTank",
+        description: "JavaScript 方向的公开 Web 项目。当前先作为作品入口展示，细节说明等待补充。",
+        href: "https://github.com/0x-IHRR/FargeSpace_ThinkTank"
+      },
+      {
+        meta: "Auction Demo",
+        title: "One-Pound-Auction",
+        description: "TypeScript 方向的拍卖演示项目。后续可补充产品机制、页面截图和构建动机。",
+        href: "https://github.com/0x-IHRR/One-Pound-Auction"
+      }
+    ];
+
+    const spreadCount = Math.ceil(workProjects.length / 2);
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function getSpread(index) {
+      const start = (index % spreadCount) * 2;
+      return [
+        workProjects[start],
+        workProjects[start + 1] || workProjects[0]
+      ];
+    }
+
+    function projectPage(project, pageNumber) {
+      return `
+        <div>
+          <div class="work-meta"><span>${escapeHtml(project.meta)}</span><span class="work-dot"></span></div>
+          <h3>${escapeHtml(project.title)}</h3>
+          <p>${escapeHtml(project.description)}</p>
+        </div>
+        <div>
+          <a class="work-link" href="${project.href}" target="_blank" rel="noreferrer">View on GitHub</a>
+          <div class="book-page-number">Page ${pageNumber}</div>
+        </div>
+      `;
+    }
+
+    function updateBookProgress() {
+      if (!bookProgress) return;
+      bookProgress.innerHTML = "";
+      for (let index = 0; index < spreadCount; index += 1) {
+        const button = document.createElement("button");
+        button.className = `book-dot${index === workSpreadIndex ? " is-active" : ""}`;
+        button.type = "button";
+        button.setAttribute("aria-label", `Open project spread ${index + 1}`);
+        button.addEventListener("click", () => {
+          turnBook(index);
+          restartBookTimer();
+        });
+        bookProgress.append(button);
+      }
+    }
+
+    function renderSpread(index) {
+      const normalized = index % spreadCount;
+      const [left, right] = getSpread(normalized);
+      workSpreadIndex = normalized;
+      bookLeft.innerHTML = projectPage(left, normalized * 2 + 1);
+      bookRight.innerHTML = projectPage(right, normalized * 2 + 2);
+      updateBookProgress();
+      refreshReactiveText(workBook);
+    }
+
+    function turnBook(nextIndex) {
+      if (!bookShell || isBookTurning || nextIndex === workSpreadIndex) return;
+      const normalized = nextIndex % spreadCount;
+      const [, currentRight] = getSpread(workSpreadIndex);
+      const [nextLeft] = getSpread(normalized);
+      const turningSheet = document.createElement("div");
+      turningSheet.className = "turning-sheet";
+      turningSheet.innerHTML = `
+        <div class="turning-face front">${projectPage(currentRight, workSpreadIndex * 2 + 2)}</div>
+        <div class="turning-face back">${projectPage(nextLeft, normalized * 2 + 1)}</div>
+      `;
+      isBookTurning = true;
+      bookShell.append(turningSheet);
+      refreshReactiveText(turningSheet);
+
+      window.setTimeout(() => renderSpread(normalized), 520);
+      window.setTimeout(() => {
+        turningSheet.remove();
+        isBookTurning = false;
+      }, 1080);
+    }
+
+    function restartBookTimer() {
+      if (bookTimer) window.clearInterval(bookTimer);
+      bookTimer = window.setInterval(() => {
+        turnBook((workSpreadIndex + 1) % spreadCount);
+      }, 5200);
+    }
+
     function addReactiveMotion(element) {
       element.addEventListener("pointermove", (event) => {
         const rect = element.getBoundingClientRect();
@@ -1427,6 +1675,8 @@
       });
     }
 
+    renderSpread(0);
+    restartBookTimer();
     wrapReactiveText(document.body);
 
     function refreshReactiveText(root) {
