@@ -341,8 +341,9 @@
     .reactive-text {
       --mx: 50%;
       --my: 50%;
+      --hover-radius: 54px;
       --gradient-base: currentColor;
-      background-image: radial-gradient(circle 42px at var(--mx) var(--my), var(--sky) 0%, var(--violet) 32%, var(--gradient-base) 74%);
+      background-image: radial-gradient(circle var(--hover-radius) at var(--mx) var(--my), var(--sky) 0%, var(--violet) 34%, var(--gradient-base) 78%);
       background-clip: text;
       -webkit-background-clip: text;
       background-size: 100% 100%;
@@ -351,6 +352,15 @@
 
     .reactive-text:hover {
       -webkit-text-fill-color: transparent;
+    }
+
+    h1 .reactive-text {
+      --hover-radius: 132px;
+    }
+
+    h2 .reactive-text,
+    .hero-copy .reactive-text {
+      --hover-radius: 76px;
     }
 
     .hero-copy {
