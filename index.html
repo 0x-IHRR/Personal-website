@@ -314,6 +314,8 @@
     }
 
     h1 {
+      display: inline-block;
+      width: fit-content;
       max-width: 860px;
       margin: 24px 0 22px;
       font-size: clamp(64px, 11vw, 158px);
@@ -335,6 +337,22 @@
     .gradient-reactive:hover {
       color: transparent;
       text-shadow: 0 0 24px color-mix(in srgb, var(--sky) 28%, transparent);
+    }
+
+    .reactive-text {
+      --mx: 50%;
+      --my: 50%;
+      --gradient-base: currentColor;
+      background-image: radial-gradient(circle at var(--mx) var(--my), var(--sky), var(--violet) 18%, var(--gradient-base) 42%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      background-size: 170% 170%;
+      transition: color 180ms var(--ease), text-shadow 180ms var(--ease);
+    }
+
+    .reactive-text:hover {
+      color: transparent;
+      text-shadow: 0 0 18px color-mix(in srgb, var(--sky) 22%, transparent);
     }
 
     .hero-copy {
@@ -1090,10 +1108,10 @@
       <div class="hero-grid">
         <div>
           <div class="eyebrow reveal">AI x Web3 / DevRel / Builder</div>
-          <h1 class="reveal gradient-reactive">小白<br>XiaoBai</h1>
+          <h1 class="reveal">小白<br>XiaoBai</h1>
           <p class="hero-copy reveal">
-            <strong class="hero-copy-primary gradient-reactive">ETHPanda DevRel、独立开发者、全干工程师、AI 忠实信徒、AI x Web3 化学反应师。</strong>
-            <span class="hero-copy-secondary gradient-reactive">A builder who likes turning new tools into useful public experiments, and turning meetings into new friendships.</span>
+            <strong class="hero-copy-primary">ETHPanda DevRel、独立开发者、全干工程师、AI 忠实信徒、AI x Web3 化学反应师。</strong>
+            <span class="hero-copy-secondary">A builder who likes turning new tools into useful public experiments, and turning meetings into new friendships.</span>
           </p>
           <div class="identity-line reveal" aria-label="Identity tags">
             <span>ETHPanda DevRel</span>
@@ -1364,7 +1382,7 @@
       }
     ];
 
-    document.querySelectorAll(".gradient-reactive").forEach((element) => {
+    function addReactiveMotion(element) {
       element.addEventListener("pointermove", (event) => {
         const rect = element.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -1372,7 +1390,41 @@
         element.style.setProperty("--mx", `${x}%`);
         element.style.setProperty("--my", `${y}%`);
       });
-    });
+    }
+
+    document.querySelectorAll(".gradient-reactive").forEach(addReactiveMotion);
+
+    function wrapReactiveText(root = document.body) {
+      const skippedTags = new Set(["SCRIPT", "STYLE", "SVG", "PATH", "TEXTAREA", "INPUT"]);
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          const parent = node.parentElement;
+          if (!parent || skippedTags.has(parent.tagName) || parent.closest(".reactive-text")) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+
+      nodes.forEach((node) => {
+        const span = document.createElement("span");
+        span.className = "reactive-text";
+        span.textContent = node.nodeValue;
+        node.replaceWith(span);
+        addReactiveMotion(span);
+      });
+    }
+
+    wrapReactiveText(document.body);
+
+    function refreshReactiveText(root) {
+      wrapReactiveText(root);
+      root.querySelectorAll(".gradient-reactive").forEach(addReactiveMotion);
+    }
 
     function resizeInput() {
       askInput.style.height = "auto";
@@ -1395,6 +1447,7 @@
     function answer(question) {
       answerBox.classList.remove("is-fresh");
       answerBox.innerHTML = findAnswer(question);
+      refreshReactiveText(answerBox);
       window.setTimeout(() => answerBox.classList.add("is-fresh"), 20);
     }
 
