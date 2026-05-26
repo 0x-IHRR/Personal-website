@@ -177,6 +177,28 @@
       font-weight: 500;
     }
 
+    .nav-motto {
+      flex: 1 1 auto;
+      min-width: 180px;
+      padding: 0 18px;
+      color: rgba(72, 111, 174, 0.42);
+      font-family: var(--font-display);
+      font-size: 15px;
+      line-height: 1.2;
+      word-spacing: 0.18em;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+      transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+    }
+
+    .nav-motto.is-switching {
+      opacity: 0.18;
+      transform: translateY(2px);
+    }
+
     .nav-links {
       gap: 4px;
       justify-content: flex-end;
@@ -214,7 +236,7 @@
       background:
         linear-gradient(112deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 255, 0.82)),
         var(--surface);
-      animation: introOverlay 1500ms var(--ease) forwards;
+      animation: introOverlay 2000ms var(--ease) forwards;
     }
 
     .intro-page,
@@ -236,7 +258,7 @@
       transform-origin: top center;
       transform: translate3d(-50%, -50%, 0) rotateX(0deg) rotateZ(-2deg);
       clip-path: polygon(0 0, 100% 0, 98% 86%, 78% 100%, 52% 91%, 23% 100%, 0 86%);
-      animation: introPagePeel 1320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: introPagePeel 1800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .intro-page::before {
@@ -273,7 +295,7 @@
       transform: translate3d(-50%, -50%, 0) rotate(var(--r0));
       clip-path: var(--shape);
       opacity: 0;
-      animation: introShard 1380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: introShard 1850ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
       animation-delay: var(--delay);
     }
 
@@ -375,6 +397,39 @@
       }
     }
 
+    @keyframes hairDrift {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0);
+        opacity: 0.04;
+      }
+
+      48% {
+        transform: translate3d(3px, -2px, 0);
+        opacity: 0.09;
+      }
+
+      72% {
+        transform: translate3d(-1px, 1px, 0);
+        opacity: 0.06;
+      }
+    }
+
+    @keyframes softBlink {
+      0%,
+      76%,
+      80%,
+      100% {
+        opacity: 0;
+      }
+
+      77.2%,
+      78.6% {
+        opacity: 0.72;
+        transform: rotate(var(--blink-rotate)) scaleY(1);
+      }
+    }
+
     .hero {
       position: relative;
       min-height: calc(100svh - var(--header-height) - 72px);
@@ -392,8 +447,71 @@
       height: 100%;
       object-fit: cover;
       object-position: 72% center;
-      z-index: -3;
+      z-index: -4;
       filter: saturate(0.96) contrast(1.01);
+    }
+
+    .hero-life-stage {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .hero-life-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("assets/bai-hero-smile.png");
+      background-size: cover;
+      background-position: 72% center;
+      background-repeat: no-repeat;
+      will-change: transform, opacity;
+    }
+
+    .hero-hair-drift {
+      clip-path: polygon(59% 7%, 87% 0, 93% 34%, 75% 47%, 61% 32%);
+      filter: brightness(1.05) saturate(0.82);
+      -webkit-mask-image: radial-gradient(ellipse at 74% 22%, #000 0 26%, rgba(0, 0, 0, 0.58) 42%, transparent 66%);
+      mask-image: radial-gradient(ellipse at 74% 22%, #000 0 26%, rgba(0, 0, 0, 0.58) 42%, transparent 66%);
+      mix-blend-mode: screen;
+      opacity: 0.06;
+      animation: hairDrift 6.2s ease-in-out infinite;
+    }
+
+    .hero-blink {
+      z-index: 1;
+      background-image: none;
+    }
+
+    .hero-blink::before,
+    .hero-blink::after {
+      content: "";
+      position: absolute;
+      top: 42.4%;
+      width: clamp(22px, 2.5vw, 36px);
+      height: clamp(9px, 0.9vw, 13px);
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg, rgba(250, 252, 255, 0.88), rgba(230, 238, 250, 0.76));
+      border-top: 1px solid rgba(82, 93, 116, 0.26);
+      box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.72) inset;
+      opacity: 0;
+      transform: rotate(var(--blink-rotate)) scaleY(0.08);
+      transform-origin: center;
+      animation: softBlink 7.8s ease-in-out infinite;
+    }
+
+    .hero-blink::before {
+      --blink-rotate: -5deg;
+      left: 62.7%;
+    }
+
+    .hero-blink::after {
+      --blink-rotate: 7deg;
+      left: 68.8%;
+      animation-delay: 42ms;
     }
 
     .hero::before {
@@ -1150,13 +1268,8 @@
       text-wrap: pretty;
     }
 
-    .contact-quote-line,
-    .contact-quote-follow {
+    .contact-quote-line {
       display: block;
-    }
-
-    .contact-quote-follow {
-      margin-top: 4px;
     }
 
     .contact-links {
@@ -1240,6 +1353,10 @@
         object-position: 64% center;
       }
 
+      .hero-life-stage {
+        display: none;
+      }
+
       .hero-inner {
         padding: 58px 0 74px;
       }
@@ -1249,6 +1366,10 @@
       .works-layout,
       .ask-layout {
         grid-template-columns: 1fr;
+      }
+
+      .nav-motto {
+        display: none;
       }
 
       .identity-ambient {
@@ -1407,6 +1528,10 @@
         display: none !important;
       }
 
+      .hero-life-stage {
+        display: none;
+      }
+
       *,
       *::before,
       *::after {
@@ -1443,6 +1568,7 @@
           <span>Blank, but not empty.</span>
         </span>
       </a>
+      <div class="nav-motto" data-nav-motto aria-hidden="true">Make the unknown usable.</div>
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#works">Works</a>
@@ -1455,6 +1581,10 @@
   <main id="top">
     <section class="hero cinema-scene cinema-hero" aria-labelledby="hero-title">
       <img class="hero-bg" src="assets/bai-hero-smile.png" alt="">
+      <span class="hero-life-stage" aria-hidden="true">
+        <span class="hero-life-layer hero-hair-drift"></span>
+        <span class="hero-life-layer hero-blink"></span>
+      </span>
       <span class="light-sweep" aria-hidden="true"></span>
       <div class="hero-inner">
         <div class="hero-content">
@@ -1500,7 +1630,7 @@
         <div class="identity-grid">
           <div class="identity-copy reveal scene-copy-step">
             <p class="quiet-statement">
-              我想做的，是把新工具的微光整理成路标，让愿意尝试的人看见下一步。
+              真正有趣的技术，不是站在远处发光，而是让人忍不住说：我也想试试。
             </p>
             <p>
               我关注 AI 与 Web3 的交叉处：个人创造力、社区协作、产品原型、开发者教育，以及那些还没被清楚表达的新机会。
@@ -1529,7 +1659,7 @@
           <div>
             <h2>Notes · Experiments · Weird Ideas</h2>
             <p class="lead">
-              这里是一组公开实验入口：Web3、工具、Web 项目和拍卖 demo。它们记录我把想法推到可运行状态的过程，也让你快速看到我的技术兴趣、问题意识和动手方式。
+              欢迎来到我的 Idea 世界：这里收藏着一些正在成形的实验，关于 Web3、工具、内容平台和拍卖 demo；你可以顺着它们，看见想法从空白走向可运行。
             </p>
           </div>
         </div>
@@ -1556,7 +1686,7 @@
               <div>
                 <span class="work-meta">Web3 / Solidity</span>
                 <h3>ADHD_BlockChain</h3>
-                <p>Web3 与 Solidity 方向的公开仓库。具体项目背景和展示图后续可补成正式 case study。</p>
+                <p>Time Gambler 是一个把任务承诺、AI 审计和链上凭证结合起来的 Web3 专注力实验。</p>
               </div>
               <a class="work-link" href="https://github.com/0x-IHRR/ADHD_BlockChain" target="_blank" rel="noreferrer">
                 <span>GitHub</span>
@@ -1570,7 +1700,7 @@
               <div>
                 <span class="work-meta">Tool / App</span>
                 <h3>Man-hour-calculator</h3>
-                <p>公开仓库显示为 Swift 工具方向。具体场景、设计背景和使用方式等待补充说明。</p>
+                <p>ManHourTracker 是原生 macOS 菜单栏工时工具：左击开始 / 结束记录，自动汇总本周工时。</p>
               </div>
               <a class="work-link" href="https://github.com/0x-IHRR/Man-hour-calculator" target="_blank" rel="noreferrer">
                 <span>GitHub</span>
@@ -1584,7 +1714,7 @@
               <div>
                 <span class="work-meta">Web Project</span>
                 <h3>FargeSpace_ThinkTank</h3>
-                <p>JavaScript 方向的公开 Web 项目。当前先作为作品入口展示，细节说明等待补充。</p>
+                <p>面向会员的 AI 资料平台原型：把海外 AI 内容整理成内容包，用主题和合集做浏览入口。</p>
               </div>
               <a class="work-link" href="https://github.com/0x-IHRR/FargeSpace_ThinkTank" target="_blank" rel="noreferrer">
                 <span>GitHub</span>
@@ -1598,7 +1728,7 @@
               <div>
                 <span class="work-meta">Auction Demo</span>
                 <h3>One-Pound-Auction</h3>
-                <p>TypeScript 方向的拍卖演示项目。后续可补充产品机制、页面截图和构建动机。</p>
+                <p>Next.js 拍卖 MVP Demo：验证一元知识盲盒从发布、展示到模拟支付和内容解锁的闭环。</p>
               </div>
               <a class="work-link" href="https://github.com/0x-IHRR/One-Pound-Auction" target="_blank" rel="noreferrer">
                 <span>GitHub</span>
@@ -1656,7 +1786,6 @@
           <h2>有真实问题，可以开始聊</h2>
           <p>
             <span class="contact-quote-line">“一个好问题，本身就是一次合作的开场。”</span>
-            <span class="contact-quote-follow">如果你手上有真实问题、半成型想法，或一段想一起推进的实验，可以从这里开始。</span>
           </p>
           <div class="contact-links">
             <a class="icon-link" href="mailto:wzx824030716@gmail.com" aria-label="Email">
@@ -1694,11 +1823,14 @@
     const promptButtons = document.querySelectorAll("[data-question]");
     const jargonMain = document.querySelector("[data-jargon-main]");
     const jargonSlots = document.querySelectorAll("[data-jargon-slot]");
+    const navMotto = document.querySelector("[data-nav-motto]");
     const pageIntro = document.querySelector("#pageIntro");
     const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const desktopCinemaQuery = window.matchMedia("(min-width: 900px)");
     let jargonTimer = null;
     let lastJargonSeed = -1;
+    let mottoTimer = null;
+    let lastMottoIndex = 0;
 
     function removePageIntro() {
       if (pageIntro?.isConnected) {
@@ -1713,7 +1845,7 @@
         pageIntro.addEventListener("animationend", (event) => {
           if (event.animationName === "introOverlay") removePageIntro();
         });
-        window.setTimeout(removePageIntro, 1600);
+        window.setTimeout(removePageIntro, 2100);
       }
     }
 
@@ -1735,6 +1867,35 @@
       "Prod is down",
       "TODO: later"
     ];
+
+    const navMottoPhrases = [
+      "Make the unknown usable.",
+      "Small notes, brave starts.",
+      "Curiosity becomes a tool.",
+      "Build gently. Ship clearly.",
+      "Find the signal in blank space.",
+      "Turn ideas into doors.",
+      "Stay curious, make it real.",
+      "Quiet work, bright paths."
+    ];
+
+    function renderNavMotto() {
+      if (!navMotto) return;
+      let nextIndex = Math.floor(Math.random() * navMottoPhrases.length);
+      if (nextIndex === lastMottoIndex) {
+        nextIndex = (nextIndex + 1) % navMottoPhrases.length;
+      }
+      lastMottoIndex = nextIndex;
+      navMotto.classList.add("is-switching");
+      window.setTimeout(() => {
+        navMotto.textContent = navMottoPhrases[nextIndex];
+        navMotto.classList.remove("is-switching");
+      }, 180);
+    }
+
+    if (!reduceMotionQuery.matches) {
+      mottoTimer = window.setInterval(renderNavMotto, 5200);
+    }
 
     function shuffle(values) {
       const next = [...values];
@@ -1892,6 +2053,7 @@
         }
       })
         .to(".hero-bg", { scale: 1.12, yPercent: -4, filter: "saturate(1.04) contrast(1.04)", ease: "none" }, 0)
+        .to(".hero-life-stage", { scale: 1.12, yPercent: -4, ease: "none" }, 0)
         .to(".hero-content", { y: -88, opacity: 0.9, ease: "none" }, 0)
         .to(".cinema-hero .light-sweep", { xPercent: 520, opacity: 0.92, ease: "none" }, 0.06)
         .to(".scroll-cue", { opacity: 0, y: 18, ease: "none" }, 0);
